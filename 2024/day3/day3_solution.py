@@ -1,4 +1,6 @@
 import re
+from typing import Iterator
+
 pattern = r'mul\(\d{1,3},\d{1,3}\)'
 pattern_numbers = r'\d{1,3}'
 
@@ -6,7 +8,7 @@ with open("day3.input") as entry:
     input_text = entry.read()
 
 
-def get_mulinstructions(input:str) -> str:
+def get_mulinstructions(input: str) -> Iterator[str]:
     acumulator = ''
     disabled = False
     for s in input:
@@ -21,12 +23,6 @@ def get_mulinstructions(input:str) -> str:
         if found and not disabled:
             yield found.group(0)
             acumulator = ''
-
-
-
-
-
-
 
 
 total = 0
