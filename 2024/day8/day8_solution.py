@@ -21,7 +21,6 @@ def get_antinodes_A(antennas: dict[str, list[Point]], grid: Grid):
                     antinodes.append(antinode2)
     return antinodes
 
-
 def get_antinodes_B(antennas: dict[str, list[Point]], grid: Grid):
     antinodes = []
     for antenna, positions in antennas.items():
@@ -32,29 +31,22 @@ def get_antinodes_B(antennas: dict[str, list[Point]], grid: Grid):
             for j in range(i + 1, ammount):
                 first = positions[i]
                 second = positions[j]
+
                 #side 1
                 point_1 = copy.deepcopy(first)
-                grid.set_value(point_1, '#')
-                if point_1 not in antinodes:
-                    antinodes.append(point_1)
                 while grid.in_bounds(point_1):
-                    antinode = Point(point_1.x - (second.x - first.x), point_1.y - (second.y - first.y))
-                    if grid.in_bounds(antinode) and antinode not in antinodes:
-                        grid.set_value(antinode, '#')
-                        antinodes.append(antinode)
-                    point_1 = antinode
+                    if grid.in_bounds(point_1) and point_1 not in antinodes:
+                        grid.set_value(point_1, '#')
+                        antinodes.append(point_1)
+                    point_1 = Point(point_1.x - (second.x - first.x), point_1.y - (second.y - first.y))
+
                 #side 2
                 point_2 = copy.deepcopy(second)
-                if point_2 not in antinodes:
-                    antinodes.append(point_2)
-                grid.set_value(point_2, '#')
                 while grid.in_bounds(point_2):
-                    antinode = Point(point_2.x + (second.x - first.x), point_2.y + (second.y - first.y))
-                    if grid.in_bounds(antinode) and antinode not in antinodes:
-                        antinodes.append(antinode)
-                        grid.set_value(antinode, '#')
-                    point_2 = antinode
-
+                    if grid.in_bounds(point_2) and point_2 not in antinodes:
+                        antinodes.append(point_2)
+                        grid.set_value(point_2, '#')
+                    point_2 = Point(point_2.x + (second.x - first.x), point_2.y + (second.y - first.y))
     return antinodes
 
 
