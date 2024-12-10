@@ -65,9 +65,8 @@ def get_data(file: str) -> tuple[Grid, Dict[str, List[Point]]]:
                         antennas[antenna] = []
                     antennas[antenna].append(Point(count, j))
             count += 1
-        grid = Grid(count, length)
         text_input.seek(0)
-        grid.from_str(text_input.read())
+        grid = Grid.from_str(text_input.read())
     return grid, antennas
 
 
