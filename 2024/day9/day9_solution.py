@@ -60,6 +60,7 @@ def get_next_free_space(content: list, limit: int, size: int) -> Optional[int]:
 
 def defrag_file_system_b(content: list):
     right = len(content) - 1
+    free_spaces = map_free_spaces(content)
     while 0 < right:
         size = 0
         while content[right] == '.':
@@ -72,7 +73,7 @@ def defrag_file_system_b(content: list):
             size += 1
 
         #find next free size slot
-        slot = get_next_free_space(content, right, size)
+        slot = get_next_free_space_b(free_spaces, size, right)
 
         #if found free space, move the file
         if slot:
@@ -81,6 +82,31 @@ def defrag_file_system_b(content: list):
                 content[right + 1 + i] = '.'
     return content
 
+def get_next_free_space_b(free_map: dict[int, int], size: int, pos_id) -> Optional[int]:
+    for key in sorted(free_map.keys()):
+        free_map[key] = free_map.pop(key)
+    for pos, free_space in free_map.items():
+        if free_space >= size and pos < pos_id:
+            free_map[pos + size] = free_map[pos] - size
+            del free_map[pos]
+            return pos
+
+    return None
+
+def map_free_spaces(content: list):
+    spaces = {}
+    count = 0
+    pos = 0
+    for i in range(len(content)):
+        if content[i] == '.':
+            count += 1
+        else:
+            if count > 0:
+                spaces[pos] = count
+            count = 0
+            pos = i + 1
+
+    return spaces
 
 def checksum(files: list, skip_free: bool) -> int:
     total = 0
