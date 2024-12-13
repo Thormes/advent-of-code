@@ -28,9 +28,8 @@ class Machine:
         try:
             solution = np.linalg.solve(A, B)
             X, Y = solution
-            print(X, Y)
             # has integer solution
-            if round(X) == round(X,3) and round(Y) == round(Y,3):
+            if round(X) == round(X, 3) and round(Y) == round(Y, 3):
                 self.tokensA = round(X)
                 self.tokensB = round(Y)
                 self.price = self.tokensA * 3 + self.tokensB
@@ -64,15 +63,19 @@ def get_cases(filename, part_b: bool):
     return machines
 
 
-machines = get_cases('day13.input', True)
-total = 0
-for machine in machines:
+machines_a = get_cases('day13.input', False)
+total_a = 0
+for machine in machines_a:
     machine.get_tokens()
-    if not machine.price:
-        print("\tUnsolvable")
-    else:
-        print(machine.price)
-        total += machine.price
-        #total += machine.tokensB + (machine.tokensA * 3)
+    if machine.price:
+        total_a += machine.price
 
-print(total)
+print("Part A:",total_a)
+machines_b = get_cases('day13.input', True)
+total_b = 0
+for machine in machines_b:
+    machine.get_tokens()
+    if machine.price:
+        total_b += machine.price
+
+print("Part B:",total_b)
