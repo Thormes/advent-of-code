@@ -1,11 +1,12 @@
 from typing import Optional
 
-from Point import Point
+from utils.Point import Point
 
 
 class Direction:
     def __init__(self, name: str, change_x: int, change_y: int):
         self.name = name
+        self.symbol = ""
         self.change_x = change_x
         self.change_y = change_y
         self.next_direction: Optional[Direction] = None
@@ -16,6 +17,18 @@ class Direction:
         else:
             self.main_axis = 'y'
             self.secondary_axis = 'x'
+        match self.name:
+            case "up":
+                self.symbol = "^"
+            case "down":
+                self.symbol = "v"
+            case "rigth":
+                self.symbol = ">"
+            case "left":
+                self.symbol = "<"
+
+    def __str__(self):
+        return self.name
 
     def next_point(self, point: Point):
         return Point(point.x + self.change_x, point.y + self.change_y)

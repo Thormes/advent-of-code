@@ -5,7 +5,7 @@ class Grid:
     def __init__(self, width, length):
         self.width = width
         self.length = length
-        self.grid = [[None for _ in range(width)] for _ in range(length)]
+        self.grid = [["" for _ in range(width)] for _ in range(length)]
 
     def fill(self, value: str):
         for row in range(self.length):
@@ -37,7 +37,7 @@ class Grid:
         sliced = [row[start_y:end_y] for row in self.grid[start_x:end_x]]
         return sliced
     def __str__(self):
-        text = f"Width: {self.width}\t Heigth: {self.length}"
+        text = ''# f"Width: {self.width}\t Heigth: {self.length}\n"
         for line in self.grid:
-            text += f"\n{' '.join(line)}"
+            text += f"{''.join(line)}\n"
         return text
