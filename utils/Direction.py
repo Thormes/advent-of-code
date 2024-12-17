@@ -22,7 +22,7 @@ class Direction:
                 self.symbol = "^"
             case "down":
                 self.symbol = "v"
-            case "rigth":
+            case "right":
                 self.symbol = ">"
             case "left":
                 self.symbol = "<"
